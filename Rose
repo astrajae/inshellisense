@@ -1,0 +1,49 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Rose extends JPanel {
+    private double width;
+    private double height;
+    private double theta;
+    private double x;
+    private double y;
+
+    public Rose(double awidth, double aheight) {
+        width = awidth;
+        height = aheight;
+        theta = 0;
+    }
+
+    public void drawRose(Graphics2D g2) {
+        Ellipse2D.Double test;
+        double r = 0;
+        for (int i = 0; i <= 100; i++) {
+            r = Math.cos(Math.toRadians(2 * theta));
+            x = r * (Math.cos(Math.toRadians(theta)) * width) + 300;
+            y = r * (Math.sin(Math.toRadians(theta)) * height) + 300;
+            test = new Ellipse2D.Double(x, y, width, height);
+            theta += 3.6;
+            g2.draw(test);
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.RED);
+        drawRose(g2);
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Rose");
+        frame.setSize(600, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Rose rose = new Rose(10, 10);
+        frame.add(rose);
+        frame.setVisible(true);
+    }
+}
